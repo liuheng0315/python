@@ -11,7 +11,7 @@ class IPanelSpider():
     titleDatePattern='<li class="list_title">([\s\S]*?)</li>'
     titlePattern='([\s\S]*?)<span class="date">'
     newsdatePattern='/><span class="date">([\s\S]*?)</span>'
-    #抓取页面内容
+    #抓取iPanel页面内容
     def __fetch_content(self):
         r=request.urlopen(IPanelSpider.url)
         htmls=r.read()
