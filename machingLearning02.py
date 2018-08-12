@@ -15,15 +15,29 @@ def load_data(filename):
     return np.array(data)
 
 data=load_data('ex2data1.txt')
-print(data.shape)
-print(data[:5])
 X=data[:,:-1]
+print('~~~~~~~~~~~~~~~~~~~~')
+print(X)
+print('-------------------')
 Y=data[:,-1:]
-print(X.shape)
-print(Y.shape)
-print(X[:5])
-print('-----------------------')
-print(Y[:5])
-
-
-
+print(Y)
+print('~~~~~~~~~~~~~~~~~~~~')
+print(Y.ravel())
+label0=np.where(Y.ravel()==0)
+print(label0)
+plt.scatter(X[label0,0],X[label0,1],marker='x',color='r',label='No admitted')
+label1=np.where(Y.ravel()==1)
+plt.scatter(X[label1,0],X[label1,1],marker='o',color = 'b',label = 'Admitted')
+plt.xlabel('Exam 1 score')
+plt.ylabel('Exam 2 score')
+plt.legend(loc='upper left')
+plt.show()
+#定义一个sigmod函数
+def sigmod(x):
+    return 1/(1+np.exp(-x))
+#定义矩阵的乘积
+def out(x,w):
+    return np.dot(x,w)
+#定义损失函数
+def compute_cost(X_train,y_train,theat):
+    return 0
