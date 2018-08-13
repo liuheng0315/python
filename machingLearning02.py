@@ -37,7 +37,7 @@ def sigmod(x):
     return 1/(1+np.exp(-x))
 #定义矩阵的乘积
 def out(x,w):
-    return np.dot(x,w)
+    return sigmod(np.dot(x,w))
 #定义损失函数
 def compute_cost(X_train,y_train,theat):
     m=X_train.shape[0]
@@ -47,9 +47,8 @@ def compute_cost(X_train,y_train,theat):
     h=out(X_train,theat)
     J=-1*np.sum(y_train*np.log(h)+(1-y_train)*np.log((1-h)))/m
     grad=X_train.T.dot((h-y_train))/m
-    print('grad1111111'+grad)
     grad=grad.ravel()
-    print('grad222222'+grad)
+    return J, grad
 #代码测试
 m=X.shape[0]
 one=np.ones((m,1))
