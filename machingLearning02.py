@@ -40,4 +40,27 @@ def out(x,w):
     return np.dot(x,w)
 #定义损失函数
 def compute_cost(X_train,y_train,theat):
-    return 0
+    m=X_train.shape[0]
+    J=0
+    theat=theat.reshape(-1,1)
+    grad=np.zeros((X_train.shape[1],1))
+    h=out(X_train,theat)
+    J=-1*np.sum(y_train*np.log(h)+(1-y_train)*np.log((1-h)))/m
+    grad=X_train.T.dot((h-y_train))/m
+    print('grad1111111'+grad)
+    grad=grad.ravel()
+    print('grad222222'+grad)
+#代码测试
+m=X.shape[0]
+one=np.ones((m,1))
+print(one)
+X=np.hstack((one,data[:,:-1]))
+print(X)
+W=np.zeros((X.shape[1],1))
+cost,grad=compute_cost(X,Y,W)
+print('compute with w=[0,0,0]')
+print('Excepted cost : 0.693')
+print(cost)
+print('Excepted gradients:[-0.1,-12,-11]')
+print(grad)
+
