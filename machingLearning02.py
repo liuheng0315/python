@@ -117,3 +117,13 @@ plt.xlabel('x1')
 plt.ylabel('y1')
 plt.legend(loc='upper left')
 plt.show()
+
+#预测函数
+def predict(X,theta):
+    h=out(X,theta)
+    y_pred=np.where(h>=0.5,1.0,0)
+    return y_pred
+prob=out(np.array([[1,45,85]]),res)
+print(prob)
+p=predict(X,res)
+print(np.mean(p==Y.ravel()))
