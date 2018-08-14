@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy import optimize
 #线性回归模型
 #首先从txt文件中导入数据
 def load_data(filename):
@@ -47,8 +48,10 @@ def compute_cost(X_train,y_train,theat):
     h=out(X_train,theat)
     J=-1*np.sum(y_train*np.log(h)+(1-y_train)*np.log((1-h)))/m
     grad=X_train.T.dot((h-y_train))/m
+    print('grad1111111',grad)
     grad=grad.ravel()
-    return J, grad
+    print('grad222222',grad)
+    return J,grad
 #代码测试
 m=X.shape[0]
 one=np.ones((m,1))
@@ -63,3 +66,54 @@ print(cost)
 print('Excepted gradients:[-0.1,-12,-11]')
 print(grad)
 
+
+#测试2
+cost1,grad1=compute_cost(X,Y,np.array(([[-24],[0.2],[0.2]])))
+print ('compute with w=[-24,0.2,0.2]')
+print ('Expected cost (approx):0.218....')
+print (cost1)
+print ('Expected gradients (approx): [0.04,2.566,0.646]')
+print (grad1)
+
+
+#选择了最优化算法，并非是梯度下降算法
+params=np.zeros((X.shape[1],1)).ravel()
+agrs=(X,Y)
+def f(params,*args):
+    X_train,y_train=args
+    m,n=X_train.shape
+    J=0
+    theta=params.reshape((n,1))
+    h=out(X_train,theta)
+    J=-1*np.sum(y_train*np.log(h)+(1-y_train)*np.log((1-h)))/m
+    print('JJJJJ',J)
+    return J
+
+def gradf(params,*args):
+    X_train,y_train=args
+    m,n=X_train.shape
+    theta=params.reshape(-1,1)
+    h=out(X_train,theta)
+    grad=np.zeros((X_train.shape[1],1))
+    grad=X_train.T.dot((h-y_train))/m
+    g=grad.ravel()
+    return g
+res=optimize.fmin_cg(f,x0=params,fprime=gradf,args=agrs,maxiter=500)
+print(res)
+
+#可视化线性的决策边界
+label=np.array(Y)
+index_0=np.where(label.ravel()==0)
+plt.scatter(X[index_0,1],X[index_0,2],marker='x'\
+            ,color = 'b',label = 'Not admitted',s = 15)
+index_1 =np.where(label.ravel()==1)
+plt.scatter(X[index_1,1],X[index_1,2],marker='o',\
+            color = 'r',label = 'Admitted',s = 15)
+#展示决策边界
+x1=np.arange(20,100,0.5)
+x2=(-res[0]-res[1]*x1)/res[2]
+plt.plot(x1,x2,color='black')
+plt.xlabel('x1')
+plt.ylabel('y1')
+plt.legend(loc='upper left')
+plt.show()
