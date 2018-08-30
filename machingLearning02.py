@@ -69,11 +69,11 @@ print(grad)
 
 #测试2
 cost1,grad1=compute_cost(X,Y,np.array(([[-24],[0.2],[0.2]])))
-print ('compute with w=[-24,0.2,0.2]')
-print ('Expected cost (approx):0.218....')
-print (cost1)
-print ('Expected gradients (approx): [0.04,2.566,0.646]')
-print (grad1)
+print('compute with w=[-24,0.2,0.2]')
+print('Expected cost (approx):0.218....')
+print(cost1)
+print('Expected gradients (approx): [0.04,2.566,0.646]')
+print(grad1)
 
 
 #选择了最优化算法，并非是梯度下降算法
@@ -123,7 +123,7 @@ def predict(X,theta):
     h=out(X,theta)
     y_pred=np.where(h>=0.5,1.0,0)
     return y_pred
-prob=out(np.array([[1,45,85]]),res)
+prob = out(np.array([[1,45,85]]),res)
 print(prob)
-p=predict(X,res)
-print(np.mean(p==Y.ravel()))
+p = predict(X,res)
+print(np.mean(p == Y.ravel()))
