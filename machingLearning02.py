@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import optimize
-#线性回归模型
+#逻辑回归模型
 #首先从txt文件中导入数据
 def load_data(filename):
     file=open(filename)
